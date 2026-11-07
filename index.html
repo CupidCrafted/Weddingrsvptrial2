@@ -1,0 +1,868 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#641b2e">
+<title>Abena & Kojo | Wedding Invitation</title>
+
+<style>
+:root {
+  --burgundy: #641b2e;
+  --deep-burgundy: #3d101f;
+  --wine: #812d43;
+  --champagne: #f5e8ce;
+  --ivory: #fffaf1;
+  --gold: #bd9861;
+  --sage: #7d8b70;
+  --dark-sage: #53634d;
+  --text: #5e473c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ivory);
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  overflow-x: hidden;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+/* ------------------------------
+   OPENING SCREEN
+------------------------------ */
+
+.stage {
+  min-height: 100svh;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 45%, #fff9ed 0%, #e8d4b5 100%);
+  perspective: 1500px;
+}
+
+.envelope {
+  width: min(88vw, 650px);
+  height: min(75vh, 490px);
+  min-height: 360px;
+  position: relative;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 25px 35px rgba(48, 18, 24, .22));
+  cursor: pointer;
+}
+
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background: var(--burgundy);
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.envelope-back::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(245, 232, 206, .55);
+}
+
+.envelope-card {
+  position: absolute;
+  inset: 18px;
+  z-index: 2;
+  background: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 18px;
+  border: 1px solid var(--gold);
+  color: var(--burgundy);
+}
+
+.envelope-card .small-title {
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 25px;
+}
+
+.envelope-card h1 {
+  font-size: clamp(42px, 9vw, 75px);
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.envelope-card .ampersand {
+  color: var(--gold);
+  font-size: 30px;
+  margin: 5px 0;
+}
+
+.envelope-card .invitation-line {
+  margin-top: 25px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.envelope-card .date-line {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--sage);
+  letter-spacing: 2px;
+}
+
+.envelope-card::before,
+.envelope-card::after {
+  content: "❧";
+  position: absolute;
+  color: var(--gold);
+  font-size: 34px;
+}
+
+.envelope-card::before {
+  top: 12px;
+  left: 15px;
+  transform: rotate(-45deg);
+}
+
+.envelope-card::after {
+  bottom: 12px;
+  right: 15px;
+  transform: rotate(135deg);
+}
+
+/* Four envelope panels */
+
+.panel {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: var(--burgundy);
+  border: 1px solid var(--gold);
+  transform-style: preserve-3d;
+  transition:
+    transform 10s cubic-bezier(.65, 0, .25, 1),
+    opacity 1s ease 9s;
+  pointer-events: none;
+}
+
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(245, 232, 206, .55);
+}
+
+.panel-top {
+  clip-path: polygon(0 0, 100% 0, 50% 53%);
+  transform-origin: top center;
+}
+
+.panel-bottom {
+  clip-path: polygon(0 100%, 100% 100%, 50% 47%);
+  transform-origin: bottom center;
+}
+
+.panel-left {
+  clip-path: polygon(0 0, 53% 50%, 0 100%);
+  transform-origin: left center;
+}
+
+.panel-right {
+  clip-path: polygon(100% 0, 47% 50%, 100% 100%);
+  transform-origin: right center;
+}
+
+.stage.opened .panel-top {
+  transform: rotateX(180deg) translateY(-150%);
+  opacity: 0;
+}
+
+.stage.opened .panel-bottom {
+  transform: rotateX(-180deg) translateY(150%);
+  opacity: 0;
+}
+
+.stage.opened .panel-left {
+  transform: rotateY(-180deg) translateX(-150%);
+  opacity: 0;
+}
+
+.stage.opened .panel-right {
+  transform: rotateY(180deg) translateX(150%);
+  opacity: 0;
+}
+
+.stage.opened .envelope {
+  pointer-events: none;
+}
+
+.open-prompt {
+  position: absolute;
+  bottom: 7%;
+  z-index: 10;
+  text-align: center;
+  color: var(--burgundy);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 10px;
+  line-height: 2;
+  animation: pulse 2s infinite;
+  cursor: pointer;
+}
+
+.open-prompt span {
+  display: block;
+  color: var(--gold);
+  font-size: 22px;
+  margin-top: 5px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: .65; }
+  50% { opacity: 1; }
+}
+
+.stage.opened .open-prompt {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s;
+}
+
+/* ------------------------------
+   MAIN INVITATION
+------------------------------ */
+
+.invitation {
+  display: none;
+  background:
+    radial-gradient(circle at top, #fffdf8, #f7eddd);
+  padding: 65px 18px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.invitation.visible {
+  display: block;
+  animation: revealInvitation 2s ease both;
+}
+
+@keyframes revealInvitation {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.invitation-inner {
+  max-width: 850px;
+  margin: auto;
+  padding: 55px 25px;
+  border: 1px solid var(--gold);
+  outline: 1px solid rgba(189, 152, 97, .35);
+  outline-offset: 8px;
+  position: relative;
+  background: rgba(255, 250, 241, .78);
+}
+
+.invitation-inner::before,
+.invitation-inner::after {
+  content: "❧";
+  position: absolute;
+  color: var(--sage);
+  font-size: 75px;
+  opacity: .65;
+}
+
+.invitation-inner::before {
+  top: 5px;
+  left: 12px;
+  transform: rotate(-40deg);
+}
+
+.invitation-inner::after {
+  bottom: 5px;
+  right: 12px;
+  transform: rotate(140deg);
+}
+
+.floral-top {
+  font-size: 38px;
+  color: var(--sage);
+  margin-bottom: 20px;
+}
+
+.kicker {
+  color: var(--sage);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin-bottom: 25px;
+}
+
+.invitation h2 {
+  font-size: clamp(45px, 8vw, 76px);
+  color: var(--burgundy);
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.15;
+}
+
+.invitation .and {
+  display: block;
+  font-size: 28px;
+  color: var(--gold);
+  margin: 4px 0;
+}
+
+.invitation .intro {
+  max-width: 500px;
+  margin: 30px auto;
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text);
+}
+
+.gold-line {
+  width: 90px;
+  height: 1px;
+  background: var(--gold);
+  margin: 28px auto;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 35px auto;
+  max-width: 650px;
+}
+
+.detail {
+  padding: 20px 8px;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+}
+
+.detail .label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 12px;
+}
+
+.detail .value {
+  color: var(--burgundy);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.detail .value small {
+  display: block;
+  font-size: 12px;
+  color: var(--text);
+  margin-top: 5px;
+}
+
+.quote {
+  max-width: 500px;
+  margin: 40px auto 0;
+  color: var(--sage);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.floral-bottom {
+  font-size: 34px;
+  color: var(--gold);
+  margin-top: 30px;
+}
+
+/* ------------------------------
+   VENUE MAP
+------------------------------ */
+
+.venue-map {
+  max-width: 760px;
+  margin: 65px auto 0;
+  padding: 35px 22px;
+  background: #fffaf1;
+  border: 1px solid var(--gold);
+  text-align: center;
+}
+
+.venue-map h2 {
+  font-size: 36px;
+  font-weight: normal;
+  font-style: italic;
+  color: var(--burgundy);
+  margin: 14px 0;
+}
+
+.venue-map p {
+  color: #80694f;
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.map-frame {
+  border: 5px solid #f5e6c8;
+  outline: 1px solid var(--gold);
+  overflow: hidden;
+}
+
+.map-frame iframe {
+  display: block;
+  width: 100%;
+  height: 350px;
+  border: 0;
+}
+
+.map-button {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 13px 25px;
+  background: var(--burgundy);
+  color: var(--champagne);
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: background .3s;
+}
+
+.map-button:hover {
+  background: var(--deep-burgundy);
+}
+
+/* ------------------------------
+   RSVP
+------------------------------ */
+
+.rsvp {
+  max-width: 650px;
+  margin: 60px auto 0;
+  padding: 40px 25px;
+  background: #fffaf1;
+  border: 1px solid var(--gold);
+}
+
+.rsvp h2 {
+  color: var(--burgundy);
+  font-size: 38px;
+  font-style: italic;
+  font-weight: normal;
+  margin: 12px 0;
+}
+
+.rsvp-intro {
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 15px auto 28px;
+  color: var(--text);
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--burgundy);
+  font-size: 12px;
+  margin-bottom: 9px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d7c4a5;
+  background: #fffdf8;
+  color: var(--text);
+  outline: none;
+  border-radius: 0;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--burgundy);
+}
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background: var(--burgundy);
+  color: var(--champagne);
+  border: none;
+  letter-spacing: 3px;
+  font-size: 11px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .3s;
+}
+
+.submit-button:hover {
+  background: var(--deep-burgundy);
+}
+
+.success-message {
+  display: none;
+  margin-top: 20px;
+  padding: 15px;
+  background: #edf0e8;
+  color: var(--dark-sage);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.footer {
+  margin-top: 55px;
+  color: var(--sage);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .stage {
+    min-height: 100svh;
+  }
+
+  .envelope {
+    width: 88vw;
+    height: 390px;
+    min-height: 0;
+  }
+
+  .envelope-card {
+    inset: 14px;
+  }
+
+  .invitation {
+    padding: 45px 15px 60px;
+  }
+
+  .invitation-inner {
+    padding: 45px 15px;
+  }
+
+  .invitation-inner::before,
+  .invitation-inner::after {
+    font-size: 48px;
+  }
+
+  .details {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 260px;
+  }
+
+  .detail {
+    padding: 16px 8px;
+  }
+
+  .venue-map {
+    margin: 45px 0 0;
+    padding: 28px 14px;
+  }
+
+  .map-frame iframe {
+    height: 280px;
+  }
+
+  .rsvp {
+    padding: 32px 18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENVELOPE OPENING -->
+<section class="stage" id="stage" onclick="openInvitation()">
+
+  <div class="envelope" id="envelope">
+
+    <div class="envelope-back"></div>
+
+    <div class="envelope-card">
+      <div class="small-title">Together with their families</div>
+
+      <h1>Abena</h1>
+      <div class="ampersand">&</div>
+      <h1>Kojo</h1>
+
+      <div class="invitation-line">Request the pleasure of your company</div>
+      <div class="date-line">25 · 12 · 2026</div>
+    </div>
+
+    <div class="panel panel-top"></div>
+    <div class="panel panel-bottom"></div>
+    <div class="panel panel-left"></div>
+    <div class="panel panel-right"></div>
+
+  </div>
+
+  <div class="open-prompt" id="openPrompt">
+    Tap anywhere to open your invitation
+    <span>↓</span>
+  </div>
+
+</section>
+
+
+<!-- MAIN INVITATION -->
+<main class="invitation" id="invitation">
+
+  <div class="invitation-inner">
+
+    <div class="floral-top">❀</div>
+
+    <div class="kicker">Together with their families</div>
+
+    <h2>Abena</h2>
+    <span class="and">&</span>
+    <h2>Kojo</h2>
+
+    <div class="gold-line"></div>
+
+    <p class="intro">
+      With hearts full of joy and gratitude, we invite you
+      to celebrate the beginning of our forever.
+      Your presence will make our special day even more memorable.
+    </p>
+
+    <div class="kicker">Joyfully invite you to celebrate their wedding</div>
+
+    <div class="details">
+
+      <div class="detail">
+        <div class="label">Date</div>
+        <div class="value">
+          Friday
+          <small>25th December 2026</small>
+        </div>
+      </div>
+
+      <div class="detail">
+        <div class="label">Time</div>
+        <div class="value">
+          9:00 AM
+          <small>Please arrive on time</small>
+        </div>
+      </div>
+
+      <div class="detail">
+        <div class="label">Venue</div>
+        <div class="value">
+          Labadi Beach Hotel
+          <small>Accra, Ghana</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="gold-line"></div>
+
+    <p class="quote">
+      "Two hearts, one love, one beautiful beginning."
+    </p>
+
+    <div class="floral-bottom">❧ ❀ ❧</div>
+
+  </div>
+
+
+  <!-- GOOGLE MAP -->
+  <section class="venue-map">
+
+    <div class="kicker">Find your way to us</div>
+
+    <h2>Our Wedding Venue</h2>
+
+    <p>Labadi Beach Hotel · Accra, Ghana</p>
+
+    <div class="map-frame">
+      <iframe
+        src="https://maps.google.com/maps?q=Labadi%20Beach%20Hotel%2C%20Accra%2C%20Ghana&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Map showing Labadi Beach Hotel">
+      </iframe>
+    </div>
+
+    <a
+      class="map-button"
+      href="https://www.google.com/maps/dir/?api=1&destination=Labadi+Beach+Hotel+Accra+Ghana"
+      target="_blank"
+      rel="noopener">
+      Get Directions
+    </a>
+
+  </section>
+
+
+  <!-- RSVP -->
+  <section class="rsvp" id="rsvp">
+
+    <div class="kicker">We would love to celebrate with you</div>
+
+    <h2>Kindly RSVP</h2>
+
+    <p class="rsvp-intro">
+      Please let us know if you will be joining us
+      as we prepare for our special day.
+    </p>
+
+    <form id="rsvpForm">
+
+      <div class="form-group">
+        <label for="guestName">Your Full Name</label>
+        <input
+          type="text"
+          id="guestName"
+          name="guestName"
+          placeholder="Enter your full name"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="attendance">Will you be attending?</label>
+        <select id="attendance" name="attendance" required>
+          <option value="">Please select</option>
+          <option value="Yes, I will attend">Yes, I will attend</option>
+          <option value="Sorry, I cannot attend">Sorry, I cannot attend</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="guestCountGroup" style="display:none">
+        <label for="guestCount">Number of guests attending</label>
+        <select id="guestCount" name="guestCount">
+          <option value="1">1 guest</option>
+          <option value="2">2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+          <option value="5">5 guests</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-button">
+        Submit RSVP
+      </button>
+
+      <div class="success-message" id="successMessage">
+        Thank you for responding. We appreciate it and look forward
+        to celebrating with you!
+      </div>
+
+    </form>
+
+  </section>
+
+
+  <div class="footer">
+    With love, Abena & Kojo
+  </div>
+
+</main>
+
+
+<script>
+const stage = document.getElementById("stage");
+const invitation = document.getElementById("invitation");
+
+let hasOpened = false;
+
+function openInvitation() {
+  if (hasOpened) return;
+
+  hasOpened = true;
+
+  stage.classList.add("opened");
+
+  // Reveal the invitation after the 10-second envelope animation.
+  setTimeout(() => {
+    invitation.classList.add("visible");
+
+    invitation.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 10000);
+}
+
+
+// RSVP attendance selection
+const attendance = document.getElementById("attendance");
+const guestCountGroup = document.getElementById("guestCountGroup");
+
+attendance.addEventListener("change", function() {
+  if (this.value === "Yes, I will attend") {
+    guestCountGroup.style.display = "block";
+  } else {
+    guestCountGroup.style.display = "none";
+  }
+});
+
+
+// RSVP form preview
+document.getElementById("rsvpForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const guestName = document.getElementById("guestName").value.trim();
+  const attendanceValue = attendance.value;
+  const guestCount = document.getElementById("guestCount").value;
+
+  if (!guestName || !attendanceValue) return;
+
+  let message = "Thank you, " + guestName + "! ";
+
+  if (attendanceValue === "Yes, I will attend") {
+    message += "We look forward to welcoming you and your " +
+      guestCount + " guest(s).";
+  } else {
+    message += "Thank you for letting us know. You will be missed!";
+  }
+
+  const successMessage = document.getElementById("successMessage");
+  successMessage.textContent = message;
+  successMessage.style.display = "block";
+
+  this.querySelector(".submit-button").textContent = "Response Submitted";
+});
+</script>
+
+</body>
+</html>
