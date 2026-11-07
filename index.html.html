@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173d2d">
+<title>Abena & Kojo | Wedding Invitation</title>
+<style>
+:root{--green:#173d2d;--green2:#234b39;--ivory:#f7f1e5;--paper:#fffaf0;--gold:#b28b4c;--ink:#25372c;--muted:#786f61}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#e9e3d8;color:var(--ink);font-family:Georgia,'Times New Roman',serif}
+button,input{font:inherit}
+.page{max-width:900px;margin:0 auto;padding:28px 18px 70px}
+.topline{text-align:center;color:var(--gold);font:11px/1.6 Arial,sans-serif;letter-spacing:.28em;text-transform:uppercase;margin:6px 0 22px}
+.scene{perspective:1400px;max-width:700px;margin:0 auto 42px}
+.envelope{position:relative;min-height:440px;background:var(--ivory);overflow:hidden;box-shadow:0 24px 60px #30291f25;border:1px solid #d8c7a7}
+.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#fff9ee 0%,#f2eadb 100%)}
+.panel{position:absolute;z-index:2;top:0;bottom:0;width:50%;background:var(--green);transition:transform 1.35s cubic-bezier(.2,.75,.2,1);overflow:hidden}
+.panel.left{left:0;transform-origin:left center;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.panel.right{right:0;transform-origin:right center}
+.panel.left:after,.panel.right:after{content:"";position:absolute;inset:0;opacity:.88;background:
+radial-gradient(ellipse at 24% 26%,#eee0c5 0 7%,transparent 7.5%),
+radial-gradient(ellipse at 28% 22%,#e7d4b1 0 3%,transparent 3.5%),
+radial-gradient(ellipse at 72% 72%,#e8d7b8 0 8%,transparent 8.5%),
+radial-gradient(ellipse at 75% 67%,#d9c49e 0 3%,transparent 3.5%),
+linear-gradient(135deg,transparent 45%,#b99a60 45.3%,transparent 46%);
+}
+.panel:before{content:"";position:absolute;inset:12px;border:1px solid #c5a76d;opacity:.8}
+.seal{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);width:86px;height:86px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e5c986,#9a7132 72%);border:3px double #f2dca4;color:#fff2ca;display:grid;place-items:center;font-size:24px;box-shadow:0 5px 16px #0004;transition:opacity .4s,transform .5s}
+.under{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 25px;background:var(--paper)}
+.under .eyebrow{font:11px Arial,sans-serif;letter-spacing:.28em;color:var(--gold)}
+.under h1{font-size:clamp(44px,8vw,76px);font-weight:400;font-style:italic;line-height:1.02;margin:20px 0 14px;color:var(--green)}
+.under .date{font-size:18px;letter-spacing:.12em;color:var(--gold)}
+.open .panel.left{transform:rotateY(-115deg)}
+.open .panel.right{transform:rotateY(115deg)}
+.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.6)}
+.openhint{position:absolute;z-index:5;bottom:20px;left:0;right:0;text-align:center;color:#fff9e9;font:10px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;pointer-events:none}
+.open .openhint{opacity:0}
+.openbtn{display:block;margin:18px auto 0;border:1px solid var(--gold);background:var(--green);color:#fff8e9;padding:14px 28px;letter-spacing:.16em;text-transform:uppercase;font:11px Arial,sans-serif;cursor:pointer;transition:.2s}
+.openbtn:hover{background:var(--green2);transform:translateY(-2px)}
+.invite{max-width:700px;margin:0 auto;background:var(--paper);padding:clamp(30px,7vw,68px) clamp(22px,7vw,70px);text-align:center;position:relative;border:1px solid #dfd0b4;box-shadow:0 15px 40px #30291f12}
+.invite:before{content:"";position:absolute;inset:12px;border:1px solid #d6c39d;pointer-events:none}
+.kicker{font:11px Arial,sans-serif;letter-spacing:.32em;color:var(--gold);text-transform:uppercase}
+.invite h2{font-size:clamp(43px,8vw,68px);font-style:italic;font-weight:400;line-height:1.08;color:var(--green);margin:24px 0 12px}
+.amp{font-size:28px;color:var(--gold);font-style:italic}
+.rule{width:100px;height:1px;background:var(--gold);margin:24px auto}
+.invitecopy{font:12px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.details{display:flex;justify-content:center;gap:34px;flex-wrap:wrap;margin:34px 0 25px}
+.detail{min-width:140px}
+.detail strong{display:block;font-size:20px;font-weight:400;color:var(--green);margin-bottom:7px}
+.detail span{font:10px Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.maplink{display:inline-flex;align-items:center;gap:9px;text-decoration:none;background:var(--green);color:#fff8e9;padding:14px 22px;font:10px Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;margin-top:5px;transition:.2s}
+.maplink:hover{background:var(--green2);transform:translateY(-2px)}
+.rsvp{max-width:700px;margin:42px auto 0;padding:clamp(28px,6vw,56px);background:#f2ecdf;border:1px solid #dfd0b4;text-align:center}
+.rsvp h3{font-size:36px;font-weight:400;font-style:italic;color:var(--green);margin:12px 0}
+.rsvp p{color:var(--muted);font-size:14px;line-height:1.7}
+form{max-width:460px;margin:28px auto 0;text-align:left}
+label{display:block;font:10px Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin:18px 0 8px}
+input,select{width:100%;padding:14px 12px;border:1px solid #cfc2a8;background:#fffdf8;color:var(--ink);border-radius:0;outline:none}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 2px #b28b4c20}
+.submit{width:100%;margin-top:24px;background:var(--green);color:#fff8e9;border:0;padding:16px;cursor:pointer;font:11px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.submit:hover{background:var(--green2)}
+#success{display:none;padding:20px;margin-top:18px;border:1px solid #bca575;color:var(--green);text-align:center;line-height:1.6}
+.footer{text-align:center;margin:35px 0 0;color:var(--gold);font:10px Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase}
+@media(max-width:520px){.envelope{min-height:360px}.details{gap:24px}.detail{min-width:120px}.panel:before{inset:8px}.seal{width:72px;height:72px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="topline">A celebration of love</div>
+  <section class="scene" aria-label="Unfolding wedding invitation">
+    <div class="envelope" id="envelope">
+      <div class="under">
+        <div class="eyebrow">Together with their families</div>
+        <h1>Abena <span class="amp">&</span> Kojo</h1>
+        <div class="date">25 · 12 · 2026</div>
+      </div>
+      <div class="panel left"></div>
+      <div class="panel right"></div>
+      <div class="seal">A&nbsp;K</div>
+      <div class="openhint">An invitation awaits</div>
+    </div>
+    <button class="openbtn" id="openBtn" type="button">Unfurl invitation</button>
+  </section>
+
+  <section class="invite" id="invitation">
+    <div class="kicker">You are warmly invited</div>
+    <div class="rule"></div>
+    <div class="invitecopy">To celebrate the union of</div>
+    <h2>Abena<br><span class="amp">&</span><br>Kojo</h2>
+    <div class="rule"></div>
+    <div class="details">
+      <div class="detail"><strong>25th December 2026</strong><span>Friday</span></div>
+      <div class="detail"><strong>9:00 AM</strong><span>Time</span></div>
+      <div class="detail"><strong>Labadi Beach Hotel</strong><span>Accra, Ghana</span></div>
+    </div>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Labadi+Beach+Hotel+Accra+Ghana" target="_blank" rel="noopener">⌖ &nbsp; Get directions</a>
+    <div class="rule"></div>
+    <div class="kicker">We would be delighted by your presence</div>
+  </section>
+
+  <section class="rsvp" id="rsvp">
+    <div class="kicker">Kindly respond</div>
+    <h3>Will you join us?</h3>
+    <p>Please let us know if you will be celebrating with us.</p>
+    <form id="rsvpForm">
+      <label for="guestName">Guest's full name</label>
+      <input id="guestName" name="guestName" autocomplete="name" placeholder="Enter your full name" required>
+      <label for="attendance">Attendance confirmation</label>
+      <select id="attendance" name="attendance" required>
+        <option value="" selected disabled>Please select</option>
+        <option value="Yes, I'll be there">Yes, I'll be there</option>
+        <option value="Sorry, I can't attend">Sorry, I can't attend</option>
+      </select>
+      <div id="partyWrap">
+        <label for="partySize">Number attending (including you)</label>
+        <select id="partySize" name="partySize">
+          <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
+        </select>
+      </div>
+      <button class="submit" type="submit">Send RSVP</button>
+      <div id="success" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+  <div class="footer">With love · Abena & Kojo · 2026</div>
+</main>
+<script>
+const envelope=document.getElementById('envelope');
+const openBtn=document.getElementById('openBtn');
+openBtn.addEventListener('click',()=>{envelope.classList.add('open');openBtn.textContent='Invitation opened';openBtn.disabled=true;document.getElementById('invitation').scrollIntoView({behavior:'smooth',block:'center'});});
+const attendance=document.getElementById('attendance');
+const partyWrap=document.getElementById('partyWrap');
+attendance.addEventListener('change',()=>{const yes=attendance.value.startsWith('Yes');partyWrap.style.display=yes?'block':'none';document.getElementById('partySize').required=yes;});
+document.getElementById('rsvpForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const name=document.getElementById('guestName').value.trim();
+ const answer=attendance.value;
+ const count=answer.startsWith('Yes')?document.getElementById('partySize').value:'0';
+ const success=document.getElementById('success');
+ success.style.display='block';
+ success.textContent=`Thank you, ${name}. Your response has been prepared: ${answer}${count!=='0'?` · ${count} attending`:''}. Please note: this preview does not yet send or save responses. Connect a form endpoint or Google Sheet before publishing to collect RSVPs.`;
+});
+</script>
+</body>
+</html>
